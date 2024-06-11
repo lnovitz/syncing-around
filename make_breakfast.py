@@ -1,25 +1,26 @@
 import time
+import asyncio
 
 
-def brewCoffee():
+async def brewCoffee():
     print("Start brewCoffee()")
-    time.sleep(3)
+    await asyncio.sleep(3)
     print("End brewCoffee()")
     return "Coffee ready"
 
 
-def toastBagel():
+async def toastBagel():
     print("Start toastBagel()")
-    time.sleep(2)
+    await asyncio.sleep(2)
     print("End toastBagel()")
     return "Bagel toasted"
 
 
-def main():
+async def main():
     start_time = time.time()
 
-    result_coffee = brewCoffee()
-    result_bagel = toastBagel()
+    batch = asyncio.gather(brewCoffee(), toastBagel())
+    result_coffee, result_bagel = await batch
 
     end_time = time.time()
     elapsed_time = end_time - start_time
@@ -30,4 +31,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
